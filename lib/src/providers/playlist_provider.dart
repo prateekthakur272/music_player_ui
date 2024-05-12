@@ -4,7 +4,7 @@ import '../models/track.dart';
 
 class PlaylistProvider extends ChangeNotifier{
   final List<Track> _playlist = [
-    Track(title: 'Oggy And The Cockroaches Theme Song', artist: 'Jack', albumArtUrl: 'assets/images/oggy.jpeg', audioFileUrl: 'assets/audios/1.mp3')
+    Track(title: 'Oggy And The Cockroaches Theme Song', artist: 'Jack : The duniya ka papa', albumArtUrl: 'assets/images/oggy.jpeg', audioFileUrl: 'assets/audios/1.mp3')
   ];
 
   Track? _currentTrack;

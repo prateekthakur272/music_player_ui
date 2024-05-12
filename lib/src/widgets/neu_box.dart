@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:music_player_ui/src/extensions/build_context_extension.dart';
 
@@ -9,7 +8,9 @@ class NeuBox extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return Container(
+      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
         color: context.colorScheme.background,
         boxShadow: [
           BoxShadow(
