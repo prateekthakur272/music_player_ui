@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:music_player_ui/src/extensions/build_context_extension.dart';
 import 'package:music_player_ui/src/extensions/int_space_extension.dart';
