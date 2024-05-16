@@ -17,15 +17,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: context.colorScheme.inversePrimary,
-        foregroundColor: context.colorScheme.onPrimary,
         title: const Text('S E T T I N G S'),
       ),
       body: ListView(
         padding: 16.all,
         children: [
           SwitchListTile(
-            tileColor: context.colorScheme.secondary,
+              tileColor: context.colorScheme.secondary,
               title: const Text('Dark Theme'),
               subtitle: const Text('Switch to dark theme'),
               value: themeProvider.isDark,
