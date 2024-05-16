@@ -13,7 +13,17 @@ class PlaylistProvider extends ChangeNotifier {
         title: 'Oggy And The Cockroaches Theme Song',
         artist: 'Jack : The duniya ka papa',
         albumArtUrl: 'assets/images/oggy.jpeg',
-        audioFileUrl: 'audios/1.mp3')
+        audioFileUrl: 'audios/1.mp3'),
+    Track(
+        title: 'Doremon Theme Song',
+        artist: 'Gian Goda',
+        albumArtUrl: 'assets/images/doremon.jpeg',
+        audioFileUrl: 'audios/doremon_theme.mp3'),
+    Track(
+        title: 'Shinchan Theme Song',
+        artist: 'Shiro',
+        albumArtUrl: 'assets/images/shinchan.jpeg',
+        audioFileUrl: 'audios/shinchan_theme.mp3'),
   ];
 
   Track? _currentTrack;

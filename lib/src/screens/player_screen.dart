@@ -51,6 +51,7 @@ class PlayerScreen extends StatelessWidget {
                           child: AspectRatio(
                               aspectRatio: 1,
                               child: Image.asset(
+                                  fit: BoxFit.cover,
                                   playlistProvider.currentTrack!.albumArtUrl))),
                       12.space,
                       Padding(

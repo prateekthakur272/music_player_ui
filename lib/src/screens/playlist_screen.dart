@@ -31,7 +31,12 @@ class PlayListScreen extends StatelessWidget {
               },
               leading: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: Image.asset(playlist[index].albumArtUrl)),
+                  child: AspectRatio(
+                      aspectRatio: 1,
+                      child: Image.asset(
+                        playlist[index].albumArtUrl,
+                        fit: BoxFit.cover,
+                      ))),
               title: Text(playlist[index].title),
               subtitle: Text(playlist[index].artist),
             ),
