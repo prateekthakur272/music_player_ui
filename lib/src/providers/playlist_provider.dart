@@ -87,7 +87,7 @@ class PlaylistProvider extends ChangeNotifier {
   void skipPrev() async {
     if (currentTrack != null) {
       if (_currentDuration.inSeconds < 2) {
-        currentTrackIndex = currentTrackIndex;
+        seek(Duration.zero);
       } else {
         if (currentTrackIndex != 0) {
           currentTrackIndex = currentTrackIndex! - 1;
