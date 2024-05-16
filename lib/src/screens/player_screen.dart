@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:music_player_ui/src/extensions/build_context_extension.dart';
 import 'package:music_player_ui/src/extensions/int_space_extension.dart';
 import 'package:music_player_ui/src/providers/playlist_provider.dart';
@@ -11,17 +9,31 @@ import 'package:provider/provider.dart';
 class PlayerScreen extends StatelessWidget {
   const PlayerScreen({super.key});
 
+  String formatTime(Duration dur) {
+    String formattedSeconds = dur.inSeconds.remainder(60).toString();
+    String formattedMins = dur.inMinutes.toString();
+    if (formattedSeconds.length == 1) {
+      formattedSeconds = '0$formattedSeconds';
+    }
+    if (formattedMins.length == 1) {
+      formattedMins = '0$formattedMins';
+    }
+    return '$formattedMins:$formattedSeconds';
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Consumer<PlaylistProvider>(builder: (context, value, child) {
+    return Consumer<PlaylistProvider>(
+        builder: (context, playlistProvider, child) {
       return Scaffold(
           backgroundColor: context.colorScheme.background,
           appBar: AppBar(
             elevation: 0,
             systemOverlayStyle: SystemUiOverlayStyle.dark,
             backgroundColor: Colors.transparent,
-            title: Text(
-                value.currentTrack != null ? value.currentTrack!.title : ""),
+            title: Text(playlistProvider.currentTrack != null
+                ? playlistProvider.currentTrack!.title
+                : ""),
           ),
           body: Padding(
             padding: 24.horizontal,
@@ -39,7 +51,7 @@ class PlayerScreen extends StatelessWidget {
                           child: AspectRatio(
                               aspectRatio: 1,
                               child: Image.asset(
-                                  value.currentTrack!.albumArtUrl))),
+                                  playlistProvider.currentTrack!.albumArtUrl))),
                       12.space,
                       Padding(
                         padding: 4.horizontal,
@@ -50,12 +62,12 @@ class PlayerScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    value.currentTrack!.title,
+                                    playlistProvider.currentTrack!.title,
                                     style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  Text(value.currentTrack!.artist)
+                                  Text(playlistProvider.currentTrack!.artist)
                                 ],
                               ),
                             ),
@@ -75,24 +87,28 @@ class PlayerScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('0:00'),
+                    Text(formatTime(playlistProvider.currentDuration)),
                     IconButton(
                         onPressed: () {}, icon: const Icon(Icons.repeat)),
                     IconButton(
                         onPressed: () {}, icon: const Icon(Icons.shuffle)),
-                    const Text('0:00'),
+                    Text(formatTime(playlistProvider.totalDuration)),
                   ],
                 ),
                 8.space,
                 SliderTheme(
                   data: context.theme.sliderTheme.copyWith(
-                    thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 0)
-                  ),
+                      thumbShape:
+                          const RoundSliderThumbShape(enabledThumbRadius: 0)),
                   child: Slider(
                     min: 0,
-                    value: 50,
-                    max: 100,
-                    onChanged: (value) {},
+                    value:
+                        playlistProvider.currentDuration.inSeconds.toDouble(),
+                    max: playlistProvider.totalDuration.inSeconds.toDouble(),
+                    onChanged: (pos) {},
+                    onChangeEnd: (pos) {
+                      playlistProvider.seek(Duration(seconds: pos.toInt()));
+                    },
                     activeColor: Colors.green.shade400,
                   ),
                 ),
@@ -101,20 +117,37 @@ class PlayerScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: NeuBox(
-                        child: IconButton(onPressed: (){}, icon: const Icon(Icons.skip_previous),),
+                        child: IconButton(
+                          onPressed: () {
+                            playlistProvider.skipPrev();
+                          },
+                          icon: const Icon(Icons.skip_previous),
+                        ),
                       ),
                     ),
                     24.space,
                     Expanded(
                       flex: 2,
                       child: NeuBox(
-                        child: IconButton(onPressed: (){}, icon: const Icon(Icons.play_arrow),),
+                        child: IconButton(
+                          onPressed: () {
+                            playlistProvider.pauseOrResume();
+                          },
+                          icon: Icon(playlistProvider.isPlaying
+                              ? Icons.pause
+                              : Icons.play_arrow),
+                        ),
                       ),
                     ),
                     24.space,
                     Expanded(
                       child: NeuBox(
-                        child: IconButton(onPressed: (){}, icon: const Icon(Icons.skip_next),),
+                        child: IconButton(
+                          onPressed: () {
+                            playlistProvider.skipNext();
+                          },
+                          icon: const Icon(Icons.skip_next),
+                        ),
                       ),
                     ),
                   ],

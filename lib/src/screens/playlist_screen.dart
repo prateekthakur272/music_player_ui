@@ -23,7 +23,7 @@ class PlayListScreen extends StatelessWidget {
             itemCount: playlist.length,
             itemBuilder: (context, index) => ListTile(
               onTap: () {
-                value.currentTrack = playlist[index];
+                value.currentTrackIndex = index;
                 Navigator.push(
                     context,
                     MaterialPageRoute(
